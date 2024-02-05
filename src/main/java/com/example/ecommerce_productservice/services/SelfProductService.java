@@ -4,11 +4,12 @@ import com.example.ecommerce_productservice.dtos.ProductDto;
 import com.example.ecommerce_productservice.models.Categories;
 import com.example.ecommerce_productservice.models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SelfProductService implements IProductService{
@@ -19,9 +20,38 @@ public class SelfProductService implements IProductService{
     }
 
 
-    @Override
-    public String getAllProducts() {
-        return null;
+//    @Override
+//    public String getAllProducts() {//change return type to List<Product> from String
+//        return null; // Run the main2 method here and see the output, list of String & list of Integer, getting ListN as name.
+//        //we can't differentiate between list of string and list of integer, that is the issue with Generics
+//    }
+
+
+ @Override
+    public List<Product> getAllProducts() {
+
+        RestTemplate restTemplate = restTemplateBuilder.build();
+
+        ResponseEntity<ProductDto[]> productDtos = restTemplate
+                .getForEntity("https://fakestoreapi.com/products",ProductDto[].class);
+
+     List<Product> answer = new ArrayList<>();
+
+     for (ProductDto productDto: productDtos.getBody()) {
+         Product product = new Product();
+         product.setId(productDto.getId());
+         product.setTitle(productDto.getTitle());
+         product.setPrice(productDto.getPrice());
+         Categories category = new Categories();
+         category.setName(productDto.getCategory());
+         product.setCategory(category);
+         product.setImageUrl(productDto.getImage());
+         answer.add(product);
+     }
+     return answer;
+
+
+
     }
 
     @Override
@@ -30,7 +60,14 @@ public class SelfProductService implements IProductService{
         //so, we need to convert product dto to product, we need conversion logic.
 
         RestTemplate restTemplate = restTemplateBuilder.build();
-        ProductDto productDto = restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",ProductDto.class,productId).getBody();
+//      //ProductDto productDto = restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",ProductDto.class,productId).getBody();//here we are getting product dto from fakestoreapi
+        //here when we are getting request(requestEntity), we have to return the responseEntity
+
+        ResponseEntity<ProductDto> productDto = restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",ProductDto.class,productId);
+        Product product = getProduct(productDto.getBody());
+        return product;
+
+
         //return productDto.toString();
 
         //instead of the above lines, if we put map.class, we get a list of products in key value pairs
@@ -55,8 +92,8 @@ public class SelfProductService implements IProductService{
 //        product.setDescription(productDto.getDescription());
 //        return product;
 
-        Product product = getProduct(productDto);
-        return product;
+//        Product product = getProduct(productDto);
+//        return product;
     }
 
     private Product getProduct(ProductDto productDto) {
@@ -73,8 +110,13 @@ public class SelfProductService implements IProductService{
     }
 
     @Override
-    public String addNewProduct(ProductDto productDto) {
-        return null;
+    public Product addNewProduct(ProductDto productDto) {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        restTemplate.postForEntity("https://fakestoreapi.com/products",productDto,ProductDto.class);
+        Product product = getProduct(productDto);
+        return product;
+
+        //return null;
     }
 
     @Override
