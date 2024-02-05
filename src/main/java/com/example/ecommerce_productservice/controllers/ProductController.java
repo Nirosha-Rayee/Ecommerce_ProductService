@@ -1,6 +1,8 @@
 package com.example.ecommerce_productservice.controllers;
 
+import com.example.ecommerce_productservice.clients.IClientProductDto;
 import com.example.ecommerce_productservice.dtos.ProductDto;
+import com.example.ecommerce_productservice.models.Categories;
 import com.example.ecommerce_productservice.models.Product;
 import com.example.ecommerce_productservice.services.IProductService;
 import org.springframework.http.HttpStatus;
@@ -46,8 +48,9 @@ public class ProductController {
             ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, headers, HttpStatus.OK);
             return responseEntity;
         } catch (Exception e) {
-            ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            return responseEntity;
+            //ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            //return responseEntity;
+            throw e;
             // return new  ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 error
         }
 
@@ -68,7 +71,7 @@ public class ProductController {
 
 
     @PostMapping()
-    public ResponseEntity<Product> addNewProduct(@RequestBody ProductDto productDto){// change return type to Product from String
+    public ResponseEntity<Product> addNewProduct(@RequestBody IClientProductDto productDto){// change return type to Product from String
         Product product = productService.addNewProduct(productDto);
         ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
         //save the product data for the database. but fake store api is not allowing to save the data after adding the product
@@ -80,10 +83,28 @@ public class ProductController {
     public String updateProduct(@PathVariable("productId") Long productId) {
         return "Updating product with id " + productId;
     }
+    @PatchMapping("/{productId}")
+    public Product patchProduct(@PathVariable("productId") Long productId, @RequestBody ProductDto productDto) {
+        Product product = new Product();
+        product.setId(productDto.getId());
+        product.setCategory(new Categories());
+        product.getCategory().setName(productDto.getCategory());
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        product.setDescription(productDto.getDescription());
+        return this.productService.updateProduct(productId, product);
+       // return "Patching product with id " + productId;
+    }
+
 
     @DeleteMapping("/{productId}")
     public String deleteProduct(@PathVariable("productId") Long productId) {
         return "Deleting product with id " + productId;
+    }
+
+    @ExceptionHandler({NullPointerException.class, IllegalArgumentException.class})
+    public ResponseEntity<String> handleException(Exception e) {
+        return new ResponseEntity<>("Kuch toh phat hai", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

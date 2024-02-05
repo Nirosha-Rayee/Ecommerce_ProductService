@@ -10,8 +10,12 @@ public class CategoryController {
     public String getAllCategories(){
         return "getting  all categories";
     }
-    public String getProductsInCategory(Long categoryId){
-        return "getting products in category with id " + categoryId;
+    public String getProductsInCategory(Long categoryId) throws Exception {
+        if(categoryId < 1) {
+            throw new Exception("Invalid category id");
+        }
+        return "Get products in category";
+        //return "getting products in category with id " + categoryId;
     }
 
 }

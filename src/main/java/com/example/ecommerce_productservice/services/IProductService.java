@@ -1,5 +1,6 @@
 package com.example.ecommerce_productservice.services;
 
+import com.example.ecommerce_productservice.clients.IClientProductDto;
 import com.example.ecommerce_productservice.dtos.ProductDto;
 import com.example.ecommerce_productservice.models.Product;
 
@@ -12,9 +13,9 @@ public interface IProductService {
     //String getSingleProduct(Long productId); // change return type to Product from String
     Product getSingleProduct(Long productId);
 
-    Product addNewProduct(ProductDto productDto);
+    Product addNewProduct(IClientProductDto productDto);
 
-    String updateProduct(Long productId);
+   Product updateProduct(Long productId,Product product);
 
     String deleteProduct(Long productId);
 
