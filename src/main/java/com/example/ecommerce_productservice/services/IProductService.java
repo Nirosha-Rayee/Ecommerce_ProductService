@@ -13,9 +13,11 @@ public interface IProductService {
     //String getSingleProduct(Long productId); // change return type to Product from String
     Product getSingleProduct(Long productId);
 
-    Product addNewProduct(IClientProductDto productDto);
+    //Product addNewProduct(IClientProductDto productDto);
 
-   Product updateProduct(Long productId,Product product);
+    Product addNewProduct(Product product);
+
+    Product updateProduct(Long productId, Product product);
 
     String deleteProduct(Long productId);
 

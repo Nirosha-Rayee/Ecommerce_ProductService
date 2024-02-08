@@ -1,6 +1,7 @@
 package com.example.ecommerce_productservice.controllers;
 
 import com.example.ecommerce_productservice.clients.IClientProductDto;
+import com.example.ecommerce_productservice.clients.fakestore.dto.FakeStoreProductDto;
 import com.example.ecommerce_productservice.dtos.ProductDto;
 import com.example.ecommerce_productservice.models.Categories;
 import com.example.ecommerce_productservice.models.Product;
@@ -71,9 +72,10 @@ public class ProductController {
 
 
     @PostMapping()
-    public ResponseEntity<Product> addNewProduct(@RequestBody IClientProductDto productDto){// change return type to Product from String
-        Product product = productService.addNewProduct(productDto);
-        ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<Product> addNewProduct(@RequestBody ProductDto productDto){// change return type to Product from String
+        Product product = getProduct(productDto);
+        Product savedproduct = this.productService.addNewProduct(product);
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(savedproduct, HttpStatus.OK);
         //save the product data for the database. but fake store api is not allowing to save the data after adding the product
         return responseEntity;
         //return "Adding new product" + productDto;
@@ -102,9 +104,21 @@ public class ProductController {
         return "Deleting product with id " + productId;
     }
 
-    @ExceptionHandler({NullPointerException.class, IllegalArgumentException.class})
+    //@ExceptionHandler({NullPointerException.class, IllegalArgumentException.class})
     public ResponseEntity<String> handleException(Exception e) {
         return new ResponseEntity<>("Kuch toh phat hai", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    private Product getProduct(ProductDto productDto) {
+        Product product = new Product();
+        product.setId(productDto.getId());
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        Categories category = new Categories();
+        category.setName(productDto.getCategory());
+        product.setCategory(category);
+        product.setImageUrl(productDto.getImage());
+        product.setDescription(productDto.getDescription());
+        return product;
     }
 
 

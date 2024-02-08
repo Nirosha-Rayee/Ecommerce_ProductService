@@ -18,6 +18,6 @@ public abstract class BaseModel {
     private Long id;
     private Date createdAt;
     private Date LastUpdatedAt;
-    private Boolean isDeleted;
+    private boolean isDeleted;
 
 }
