@@ -2,6 +2,7 @@ package com.example.ecommerce_productservice.services;
 
 import com.example.ecommerce_productservice.models.Product;
 import com.example.ecommerce_productservice.repositries.ProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

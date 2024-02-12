@@ -15,6 +15,8 @@ public class Product extends BaseModel{
     private String description;
     private String imageUrl;
     private Double price;
+    //@ManyToOne (cascade = CascadeType.MERGE)
     @ManyToOne (cascade = CascadeType.ALL)
     private Categories category;
+    private Boolean isPublic;
 }

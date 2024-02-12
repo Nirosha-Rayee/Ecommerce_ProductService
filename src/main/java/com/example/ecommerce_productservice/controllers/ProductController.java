@@ -6,6 +6,7 @@ import com.example.ecommerce_productservice.dtos.ProductDto;
 import com.example.ecommerce_productservice.models.Categories;
 import com.example.ecommerce_productservice.models.Product;
 import com.example.ecommerce_productservice.services.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
