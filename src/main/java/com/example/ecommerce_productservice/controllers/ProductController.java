@@ -44,7 +44,7 @@ public class ProductController {
             headers.add("Content-Type", "application/json");
             headers.add("auth-token", "heyaccess");
             Product product = productService.getSingleProduct(productId);
-            if (productId < 1) {
+            if (productId < 1) { // put debug point here & run the test in debug mode
                 throw new IllegalArgumentException("something went wrong");
             }
             ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, headers, HttpStatus.OK);
