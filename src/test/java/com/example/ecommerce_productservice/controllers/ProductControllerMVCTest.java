@@ -85,9 +85,9 @@ public class ProductControllerMVCTest {
                         .contentType(MediaType.APPLICATION_JSON) // we are sending the JSON data
                         .content(objectMapper.writeValueAsString(productToCreate))) // we are sending the productToCreate
                 .andExpect(status().isOk())// we are expecting the status to be OK
-                .andExpect(content().string(objectMapper.writeValueAsString(expectedProduct)));// we are expecting the content to be the expected product
-//                .andExpect(jsonPath("$.student.name", is("Nikhil")))
-//                .andExpect(jsonPath("$.length()", is(2)));
+                .andExpect(content().string(objectMapper.writeValueAsString(expectedProduct)))// put ;  and run . we are expecting the content to be the expected product
+                .andExpect(jsonPath("$.student.name", is("Nikhil"))) //1
+                .andExpect(jsonPath("$.length()", is(2))); //2 , these 1,2 lines are written in after assertj, hamcrest library
 
     }
     //this is how unit testing is done for client perspective

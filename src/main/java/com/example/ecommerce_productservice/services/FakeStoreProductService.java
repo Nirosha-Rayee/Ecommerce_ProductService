@@ -7,7 +7,9 @@ import com.example.ecommerce_productservice.dtos.ProductDto;
 import com.example.ecommerce_productservice.models.Categories;
 import com.example.ecommerce_productservice.models.Product;
 import jakarta.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -24,11 +26,12 @@ import org.springframework.web.client.RestClientException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Service
+@Service
+@Primary
 public class FakeStoreProductService implements IProductService{
     private RestTemplateBuilder restTemplateBuilder;
     private FakeStoreClient fakeStoreClient;
-
+    @Autowired
     public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient) {
 
         this.restTemplateBuilder = restTemplateBuilder;
@@ -86,14 +89,17 @@ public class FakeStoreProductService implements IProductService{
         // becoz, we hgot product dto from fakestoreapi. this we should not expose to the client. so, we need to convert it to our product.
         //so, we need to convert product dto to product, we need conversion logic.
 
-        RestTemplate restTemplate = restTemplateBuilder.build();
-//      //ProductDto productDto = restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",ProductDto.class,productId).getBody();//here we are getting product dto from fakestoreapi
-        //here when we are getting request(requestEntity), we have to return the responseEntity
+//        RestTemplate restTemplate = restTemplateBuilder.build();
+////      //ProductDto productDto = restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",ProductDto.class,productId).getBody();//here we are getting product dto from fakestoreapi
+//        //here when we are getting request(requestEntity), we have to return the responseEntity
+//
+//        ResponseEntity<FakeStoreProductDto> productDto = restTemplate.
+//                getForEntity("https://fakestoreapi.com/products/{id}",FakeStoreProductDto.class,productId);
+//        Product product = getProduct(productDto.getBody());
+//        return product;
 
-        ResponseEntity<FakeStoreProductDto> productDto = restTemplate.
-                getForEntity("https://fakestoreapi.com/products/{id}",FakeStoreProductDto.class,productId);
-        Product product = getProduct(productDto.getBody());
-        return product;
+        //FakeStoreProductDto fs = fakeStoreClient.getSingleProduct(productId);
+        return new Product();
 
 
         //return productDto.toString();
