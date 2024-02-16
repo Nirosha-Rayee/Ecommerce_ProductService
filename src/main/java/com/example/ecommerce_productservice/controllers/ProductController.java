@@ -5,8 +5,12 @@ import com.example.ecommerce_productservice.clients.fakestore.dto.FakeStoreProdu
 import com.example.ecommerce_productservice.dtos.ProductDto;
 import com.example.ecommerce_productservice.models.Categories;
 import com.example.ecommerce_productservice.models.Product;
+import com.example.ecommerce_productservice.security.JwtObject;
+import com.example.ecommerce_productservice.security.TokenValidator;
 import com.example.ecommerce_productservice.services.IProductService;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,15 +19,18 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
     IProductService productService;
+    TokenValidator tokenValidator;
 
-    public ProductController(IProductService productService) {
+    public ProductController(IProductService productService, TokenValidator tokenValidator) {
         this.productService = productService;
+        this.tokenValidator = tokenValidator;
     }
 
     //    @GetMapping("/{id}")
@@ -38,16 +45,33 @@ public class ProductController {
 //    }
     @GetMapping("/{id}")
     public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long productId) {
+    //public ResponseEntity<Product> getSingleProduct(@Nullable @RequestHeader(HttpHeaders.AUTHORIZATION) String authToken, @PathVariable("id") Long productId) {
         try {
-            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-            headers.add("Accept", "application/json"); // instead of json data, we can use xml
-            headers.add("Content-Type", "application/json");
-            headers.add("auth-token", "heyaccess");
+
+//            JwtObject authTokenObj = null;
+//            if(authToken != null) {
+//                Optional<JwtObject> authObjectOptional = tokenValidator.validateToken(authToken);
+//                if(authObjectOptional.isEmpty()) {
+//                    // throw exception
+//                }
+//                authTokenObj = authObjectOptional.get();
+//            }
+//
+//            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+//            headers.add("Accept", "application/json"); // instead of json data, we can use xml
+//            headers.add("Content-Type", "application/json");
+//            headers.add("auth-token", "heyaccess");
+
+            // Apply rule based user Roles
+            //Product product = this.productService.getSingleProduct(productId, authTokenObj);
+
+
             Product product = productService.getSingleProduct(productId); //previous (productId+1)
             if (productId < 1) { // put debug point here & run the test in debug mode
                 throw new IllegalArgumentException("something went wrong");
             }
-            ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, headers, HttpStatus.OK);
+            //ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, headers, HttpStatus.OK);
+            ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
             return responseEntity;
         } catch (Exception e) {
             //ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
