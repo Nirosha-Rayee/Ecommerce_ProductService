@@ -1,6 +1,7 @@
 package com.example.ecommerce_productservice.services;
 
 import com.example.ecommerce_productservice.models.Product;
+import com.example.ecommerce_productservice.repositries.ProductElasticSearchRepo;
 import com.example.ecommerce_productservice.repositries.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,11 @@ import java.util.List;
 public class SelfProductService implements IProductService{
 
     ProductRepo productRepo;
+    ProductElasticSearchRepo productElasticSearchRepo;
 
-    public SelfProductService(ProductRepo productRepo) {
+    public SelfProductService(ProductRepo productRepo, ProductElasticSearchRepo productElasticSearchRepo) {
         this.productRepo = productRepo;
+        this.productElasticSearchRepo = productElasticSearchRepo;
     }
 
     @Override
@@ -27,7 +30,12 @@ public class SelfProductService implements IProductService{
 
     @Override
     public Product addNewProduct(Product product) {
+//        this.productRepo.save(product);
+//        return product;
+
+        //after elastic search added,  first save in DB and we have to save the product in the elastic search repo as well
         this.productRepo.save(product);
+        this.productElasticSearchRepo.save(product);
         return product;
     }
 

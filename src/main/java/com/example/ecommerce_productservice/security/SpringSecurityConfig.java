@@ -27,8 +27,12 @@ public class SpringSecurityConfig {
 //               .formLogin(Customizer.withDefaults());
 
        http.authorizeHttpRequests((authorize) -> authorize
-               .requestMatchers("/products").hasAuthority("admin")
-               .requestMatchers("/search").permitAll()
+                .requestMatchers("/*").permitAll() //this line is used for sorting
+
+
+//               .requestMatchers("/products")
+//                       .hasAuthority("admin")
+//               .requestMatchers("/search").permitAll()
                .anyRequest().permitAll()).formLogin(Customizer.withDefaults())
 
                 .cors().disable()

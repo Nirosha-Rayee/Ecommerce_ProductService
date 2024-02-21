@@ -44,12 +44,28 @@ public class SearchController {
 
 
 
-    public Page<Product> searchProducts(@RequestBody SearchRequestDto searchRequestDto) {
+   /* public Page<Product> searchProducts(@RequestBody SearchRequestDto searchRequestDto) {
 
     Page<Product> result = searchService.searchProducts(searchRequestDto.getQuery(),
             searchRequestDto.getPageNumber(), searchRequestDto.getSizeOfPage());
     return result;
-    } // this will return the result in pages
+    }*/ // this will return the result in pages
+
+
+
+
+    //sorting , we have Hardcoded the sorting parameters but parameters can be changed according to the requirement
+    public List<ProductDto> searchProducts(@RequestBody SearchRequestDto searchRequestDto) {
+
+        List<Product> result = searchService.searchProducts(searchRequestDto.getQuery(),
+                searchRequestDto.getPageNumber(), searchRequestDto.getSizeOfPage(), searchRequestDto.getSortParamList());
+
+        List<ProductDto> shareableResult = new LinkedList<>();
+        for (Product product : result) {
+            shareableResult.add(getProduct(product));
+        }
+        return shareableResult;
+    }
 
 
     private ProductDto getProduct(Product p) {

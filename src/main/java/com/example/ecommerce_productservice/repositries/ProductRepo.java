@@ -38,5 +38,15 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     //List<Product> findByTitleEquals(String title, PageRequest pageable); //this query is shows list of products by their title
 
     //instead of list of products, we want to return a  page of products
-    Page<Product> findByTitleEquals(String title, PageRequest pageable);
+    //Page<Product> findByTitleEquals(String title, PageRequest pageable);
+
+    //Page<Product> findByTitleEqualsOrderBy(String title, PageRequest pageable); // we can do sorting by adding OrderBy in the query
+
+    List <Product> findByTitleEquals(String title, PageRequest pageable);
+
+
+
 }
+
+
+
