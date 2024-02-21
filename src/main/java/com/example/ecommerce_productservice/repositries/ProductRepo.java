@@ -1,10 +1,11 @@
 package com.example.ecommerce_productservice.repositries;
 
 import com.example.ecommerce_productservice.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
@@ -27,5 +28,15 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     //List<Product> findAllByIsPublicTrue();
 
-//    List<Product> findByTitleEquals(String title, Pageable pageable);
+
+
+    //this query related to search by title in the database and return the result , related to elastic search class
+    //List<Product> findByTitleEquals(String title);
+
+    //after the search by title, we have implemented pagination to return the result in pages
+
+    //List<Product> findByTitleEquals(String title, PageRequest pageable); //this query is shows list of products by their title
+
+    //instead of list of products, we want to return a  page of products
+    Page<Product> findByTitleEquals(String title, PageRequest pageable);
 }

@@ -28,8 +28,11 @@ public class SpringSecurityConfig {
 
        http.authorizeHttpRequests((authorize) -> authorize
                .requestMatchers("/products").hasAuthority("admin")
-               .anyRequest().permitAll()).formLogin(Customizer.withDefaults());
+               .requestMatchers("/search").permitAll()
+               .anyRequest().permitAll()).formLogin(Customizer.withDefaults())
 
+                .cors().disable()
+                .csrf().disable();
 
 //        http.authorizeHttpRequests((authorize) -> authorize
 //                        .requestMatchers("/*").permitAll()
