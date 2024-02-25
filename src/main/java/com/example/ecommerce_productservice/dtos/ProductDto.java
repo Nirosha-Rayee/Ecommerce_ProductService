@@ -4,13 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
-public class ProductDto {
+public class ProductDto implements Serializable { //for redis cache
+    //public class ProductDto{
     private Long id;
     private String title;
-    private double price;
+    private Double price;
     private String description;
     private String image;
     private String category;

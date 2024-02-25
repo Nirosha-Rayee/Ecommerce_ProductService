@@ -5,12 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.elasticsearch.annotations.Document;
+//import org.springframework.data.elasticsearch.annotations.Document;
 
 @Getter
 @Setter
 @Entity
-@Document(indexName = "productservice")
+//@Document(indexName = "productservice")
 
 public class Product extends BaseModel{
     private String title;
@@ -21,5 +21,5 @@ public class Product extends BaseModel{
     @ManyToOne (cascade = CascadeType.ALL)
     private Categories category;
     private Boolean isPublic;
-    private int numberOfUnits;
+   // private int numberOfUnits;
 }

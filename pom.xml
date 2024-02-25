@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
@@ -99,31 +99,59 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.opensearch.client/spring-data-opensearch -->
+        <!--<dependency>
+                 <groupId>org.opensearch.client</groupId>
+                 <artifactId>spring-data-opensearch</artifactId>
+                 <version>1.3.0</version>
+             </dependency> -->
 
 
 
         <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+
         </dependency>
-    </dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>4.1.0</version>
+        </dependency>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
-</project>
+
+
+
+
+        <dependency>
+                 <groupId>jakarta.persistence</groupId>
+                 <artifactId>jakarta.persistence-api</artifactId>
+                 <version>3.1.0</version>
+             </dependency>
+         </dependencies>
+
+         <build>
+             <plugins>
+                 <plugin>
+                     <groupId>org.springframework.boot</groupId>
+                     <artifactId>spring-boot-maven-plugin</artifactId>
+                     <configuration>
+                         <excludes>
+                             <exclude>
+                                 <groupId>org.projectlombok</groupId>
+                                 <artifactId>lombok</artifactId>
+                             </exclude>
+                         </excludes>
+                     </configuration>
+                 </plugin>
+             </plugins>
+         </build>
+
+     </project>

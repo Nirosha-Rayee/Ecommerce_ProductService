@@ -27,16 +27,23 @@ public class SpringSecurityConfig {
 //               .formLogin(Customizer.withDefaults());
 
        http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/*").permitAll() //this line is used for sorting
+               // .requestMatchers("/*").permitAll() //this line is used for sorting
+
+                               .requestMatchers("/products").hasAuthority("admin")
+
+                               .anyRequest().permitAll())
+               .formLogin(Customizer.withDefaults());
 
 
 //               .requestMatchers("/products")
 //                       .hasAuthority("admin")
 //               .requestMatchers("/search").permitAll()
-               .anyRequest().permitAll()).formLogin(Customizer.withDefaults())
+               //.anyRequest().permitAll()).formLogin(Customizer.withDefaults())
 
-                .cors().disable()
-                .csrf().disable();
+              // )
+
+               // .cors().disable()
+                //.csrf().disable();
 
 //        http.authorizeHttpRequests((authorize) -> authorize
 //                        .requestMatchers("/*").permitAll()

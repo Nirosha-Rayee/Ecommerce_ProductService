@@ -1,6 +1,7 @@
 package com.example.ecommerce_productservice.controllers;
 
 import com.example.ecommerce_productservice.clients.fakestore.client.FakeStoreClient;
+import com.example.ecommerce_productservice.dtos.ProductDto;
 import com.example.ecommerce_productservice.models.Product;
 import com.example.ecommerce_productservice.services.FakeStoreProductService;
 import com.example.ecommerce_productservice.services.IProductService;
@@ -61,7 +62,9 @@ class ProductControllerTest {
         product.setTitle("test");
         when(productService.getSingleProduct(any(Long.class))).thenReturn(product);
 
-        ResponseEntity<Product> productResponseEntity = productController.getSingleProduct(2l);
+        //ResponseEntity<Product> productResponseEntity = productController.getSingleProduct(2l);
+
+        ResponseEntity<ProductDto> productResponseEntity = productController.getSingleProduct(2l); //change the return type to ProductDto from Product in redis class
 
         assertNotNull(productResponseEntity);
         assertEquals("test", productResponseEntity.getBody().getTitle());

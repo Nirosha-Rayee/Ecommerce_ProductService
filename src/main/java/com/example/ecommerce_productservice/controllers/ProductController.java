@@ -9,6 +9,8 @@ import com.example.ecommerce_productservice.security.JwtObject;
 import com.example.ecommerce_productservice.security.TokenValidator;
 import com.example.ecommerce_productservice.services.IProductService;
 import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,7 +46,18 @@ public class ProductController {
 //        return product;
 //    }
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long productId) {
+//    public ResponseEntity<ProductDto> getSingleProduct(@PathVariable("id") Long productId) {
+//        try {
+//            Product product = productService.getSingleProduct(productId);
+//            return new ResponseEntity<>(getProductDto(product), HttpStatus.OK);
+//        } catch (Exception e) {
+//            throw e;
+//        }
+//    }  // this method also correct but we can also use the below method to get the single product done in spring cloud class.
+
+
+    
+    public ResponseEntity<ProductDto> getSingleProduct(@PathVariable("id") Long productId) {
     //public ResponseEntity<Product> getSingleProduct(@Nullable @RequestHeader(HttpHeaders.AUTHORIZATION) String authToken, @PathVariable("id") Long productId) {
         try {
 
@@ -70,9 +83,18 @@ public class ProductController {
             if (productId < 1) { // put debug point here & run the test in debug mode
                 throw new IllegalArgumentException("something went wrong");
             }
+
+
             //ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, headers, HttpStatus.OK);
-            ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-            return responseEntity;
+           // ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+
+
+           ResponseEntity<ProductDto> responseEntity = new ResponseEntity<>(getProductDto(product), HttpStatus.OK); // used in Redis class // change from Product to ProductDto in method signature
+
+
+          // return new ResponseEntity<>(getProductDto(product), HttpStatus.OK);
+
+           return responseEntity;
         } catch (Exception e) {
             //ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             //return responseEntity;
@@ -86,8 +108,9 @@ public class ProductController {
     //public String getAllProducts(){// change return type to List<Product> from String
         //return "Returning all products";
     //}
-    public List<Product> getAllProducts(){
-        return this.productService.getAllProducts(); // this is a shortcut, we can also use the below code
+    public ResponseEntity <List<Product>> getAllProducts(){
+       // return this.productService.getAllProducts(); // this is a shortcut, we can also use the below code
+        return new ResponseEntity<>(this.productService.getAllProducts(), HttpStatus.OK);
     }
 
 //    @GetMapping("")
@@ -145,6 +168,15 @@ public class ProductController {
         product.setDescription(productDto.getDescription());
         return product;
     }
+
+    private ProductDto getProductDto(Product productDto) {
+        ProductDto product = new ProductDto();
+        product.setId(productDto.getId());
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+
+        return product;
+    } // used in Redis class
 
 
 

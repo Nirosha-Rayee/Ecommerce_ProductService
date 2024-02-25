@@ -2,7 +2,7 @@ package com.example.ecommerce_productservice.services;
 
 import com.example.ecommerce_productservice.models.Product;
 import com.example.ecommerce_productservice.models.SortParam;
-import com.example.ecommerce_productservice.repositries.ProductElasticSearchRepo;
+//import com.example.ecommerce_productservice.repositries.ProductElasticSearchRepo;
 import com.example.ecommerce_productservice.repositries.ProductRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
