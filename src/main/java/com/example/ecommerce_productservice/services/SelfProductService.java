@@ -5,6 +5,7 @@ import com.example.ecommerce_productservice.dtos.UserDto;
 import com.example.ecommerce_productservice.models.Product;
 //import com.example.ecommerce_productservice.repositries.ProductElasticSearchRepo;
 import com.example.ecommerce_productservice.repositries.ProductRepo;
+import io.lettuce.core.output.ScanOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,8 @@ public class SelfProductService implements IProductService{
 
     @Override
     public Product getSingleProduct(Long productId) {
+
+        System.out.println("In Product Service");
 
         // RestTemplate restTemplate = new RestTemplate();
         //ResponseEntity<UserDto> response = restTemplate.getForEntity("http://localhost:9002/users/1", UserDto.class); //these two lines are used before creating the RT Config class.
